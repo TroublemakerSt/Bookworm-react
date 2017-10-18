@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { Route } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import HomePage from './components/pages/HomePage';
@@ -12,9 +13,9 @@ import UserRoute from './components/routes/UserRoute';
 import GuestRoute from './components/routes/GuestRoute';
 import TopNavigation from './components/navigation/TopNavigation';
 
-const App = ({ location }) => (
+const App = ({ location, isAuthenticated }) => (
   <div className="ui container">
-    <TopNavigation />
+    {isAuthenticated && <TopNavigation />}
     <Route location={location} path="/" exact component={HomePage} />
     <GuestRoute location={location} path="/login" exact component={LoginPage} />
     <Route
@@ -54,6 +55,13 @@ App.propTypes = {
   location: PropTypes.shape({
     pathname: PropTypes.string.isRequired,
   }).isRequired,
+  isAuthenticated: PropTypes.bool.isRequired,
 };
 
-export default App;
+function mapStateToProps(state) {
+  return {
+    isAuthenticated: !!state.user.email,
+  };
+}
+
+export default connect(mapStateToProps)(App);
