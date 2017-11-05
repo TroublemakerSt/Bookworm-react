@@ -13,6 +13,7 @@ class BookForm extends React.Component {
       pages: this.props.book.pages,
     },
     covers: this.props.book.covers,
+    index: 0,
     loading: false,
     errors: {},
   };
@@ -64,6 +65,15 @@ class BookForm extends React.Component {
     return errors;
   };
 
+  changeCover = () => {
+    const { index, covers } = this.state;
+    const newIndex = index + 1 >= covers.length ? 0 : index + 1;
+    this.setState({
+      index: newIndex,
+      data: { ...this.state.data, cover: covers[newIndex] },
+    });
+  };
+
   render() {
     const { data, errors, loading } = this.state;
 
@@ -113,6 +123,11 @@ class BookForm extends React.Component {
               </Grid.Column>
               <Grid.Column>
                 <Image size="small" src={data.cover} />
+                {this.state.covers.length > 1 && (
+                  <a role="button" tabIndex={0} onClick={this.changeCover}>
+                    Another cover
+                  </a>
+                )}
               </Grid.Column>
             </Grid.Row>
             <Grid.Row>
