@@ -3,11 +3,11 @@ import api from '../api';
 
 export const userLoggedIn = user => ({
   type: USER_LOGGED_IN,
-  user,
+  user
 });
 
 export const userLoggedOut = () => ({
-  type: USER_LOGGED_OUT,
+  type: USER_LOGGED_OUT
 });
 
 export const login = credentials => dispatch =>
@@ -28,6 +28,9 @@ export const confirm = token => dispatch =>
   });
 
 export const resetPasswordRequest = ({ email }) => () =>
+  api.user.resetPasswordRequest(email);
+
+export const resentPasswordRequest = ({ email }) => () =>
   api.user.resetPasswordRequest(email);
 
 export const validateToken = token => () => api.user.validateToken(token);
