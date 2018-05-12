@@ -8,20 +8,20 @@ class SearchBookForm extends React.Component {
     query: '',
     loading: false,
     options: [],
-    books: {},
+    books: {}
   };
 
   onSearchChange = (e, data) => {
     clearTimeout(this.timer);
     this.setState({
-      query: data.searchQuery,
+      query: data.searchQuery
     });
     this.timer = setTimeout(this.fetchOptions, 1000);
   };
 
   onChange = (e, data) => {
     this.setState({
-      query: data.value,
+      query: data.value
     });
     this.props.onBookSelect(this.state.books[data.value]);
   };
@@ -29,7 +29,7 @@ class SearchBookForm extends React.Component {
   fetchOptions = () => {
     if (!this.state.query) return;
     this.setState({
-      loading: true,
+      loading: true
     });
     axios
       .get(`/api/books/search?q=${this.state.query}`)
@@ -42,13 +42,13 @@ class SearchBookForm extends React.Component {
           options.push({
             key: book.goodreadsId,
             value: book.goodreadsId,
-            text: book.title,
+            text: book.title
           });
         });
         this.setState({
           loading: false,
           options,
-          books: booksHash,
+          books: booksHash
         });
       });
   };
@@ -72,7 +72,7 @@ class SearchBookForm extends React.Component {
 }
 
 SearchBookForm.propTypes = {
-  onBookSelect: PropTypes.func.isRequired,
+  onBookSelect: PropTypes.func.isRequired
 };
 
 export default SearchBookForm;
